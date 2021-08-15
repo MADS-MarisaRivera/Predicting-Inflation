@@ -80,7 +80,6 @@ For example, when we predict deflation periods, we may promote in our companies 
   p = requests.post('https://api.bls.gov/publicAPI/v1/timeseries/data/', data=data, headers=headers)
   json_data = json.loads(p.text)
   for series in json_data['Results']['series']:
-      #x=prettytable.PrettyTable(["series id","year","period","value","footnotes"])
       cols=["series id","year","period","value","footnotes"]
       x=pd.DataFrame(columns = cols)
       seriesId = series['seriesID']
