@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/MADS-MarisaRivera/Predicting-Inflation">
-    <img src="logo.jpg" alt="Logo" width="200" height="200">
+    <img src="images/logo.jpg" alt="Logo" width="200" height="200">
   </a>
 
   <h3 align="center">Predicting Inflation</h3>
@@ -43,7 +43,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="inflacion.jpg" alt="App" width="800" height="400">
+<img src="images/inflacion.jpg" alt="App" width="800" height="400">
 
 According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays, **Guatemala is reporting a 3.82% inflation at July2021**, which is 0.94pp more than last year at July2020. At this point, it is important to enhance than inflation will always exist in our society, people has to learn to live with it. However, if we look at the definition of inflation itself:
 <br/>
