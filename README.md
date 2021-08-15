@@ -206,28 +206,88 @@ Follow this instructions to setup project.
    ```sh
       python app.py
    ```
+5. [PythonAnywhere Output](http://jrs.pythonanywhere.com)
+  <img src="images/model_output.png" alt="App" width="800" height="300">
+
 
 <!-- USAGE EXAMPLES -->
 ## Dev
 
-* app.py functions:
+* app.route/
   ```
   @app.route('/')
   def home():
-      #test = 99
+      headers = {'Content-type': 'application/json'}
+      data = json.dumps({"seriesid": ['SUUR0000SA0'],"startyear":"2012", "endyear":"2021"})
+      p = requests.post('https://api.bls.gov/publicAPI/v1/timeseries/data/', data=data, headers=headers)
+      json_data = json.loads(p.text)    
+
+      x = []
+
+      for series in json_data['Results']['series']:
+          seriesId = series['seriesID']
+          for item in series['data']:
+              year = item['year']
+              period = item['period']
+              value = item['value']
+              footnotes=""
+              for footnote in item['footnotes']:
+                  if footnote:
+                      footnotes = footnotes + footnote['text'] + ','
+
+
+              if 'M01' <= period <= 'M12':
+                  y = [seriesId,year,period,value,footnotes[0:-1]]
+                  x.append(y)
+
+      data_inf = pd.DataFrame(x)
+      cols=["series id","year","period","value","footnotes"]
+      data_inf.columns = cols
+      data_inf['value-1'] = data_inf['value'].shift(-1)
+      data_inf['value-3'] = data_inf['value'].shift(-3)
+      data_inf['value-6'] = data_inf['value'].shift(-6)
+      data_inf['value-12'] = data_inf['value'].shift(-12)
+      data_inf = data_inf.astype ({"series id": str,"year": int,"period":str,"value": float,"footnotes":str, "value-1": float, "value-3": float, "value-6": float, "value-12": float})
+      data_inf['var-1'] = data_inf['value']/data_inf['value-1']-1
+      data_inf['var-3'] = data_inf['value']/data_inf['value-3']-1
+      data_inf['var-6'] = data_inf['value']/data_inf['value-6']-1
+      data_inf['var-12'] = data_inf['value']/data_inf['value-12']-1
+      data_inf['var-1_lag'] = data_inf['var-1'].shift(-1)
+      data_inf['var-3_lag'] = data_inf['var-3'].shift(-1)
+      data_inf['var-6_lag'] = data_inf['var-6'].shift(-1)
+      data_inf['var-12_lag'] = data_inf['var-12'].shift(-1)
+      data_inf
+
+      X = data_inf[['var-1_lag','var-3_lag','var-6_lag','var-12_lag']][1:101]
+
+      with open(r"./model_xg.pkl", "rb") as input_file:
+          model_xg = pickle.load(input_file)
+
+      shap_plot(0,X,model_xg)
+
+
+      data_drift_report = Dashboard(tabs = [DataDriftTab])
+
+      data_drift_report.calculate(X,X, column_mapping = None)
+      data_drift_report.save("templates/drift.html")
+
       preds = X.values.tolist()[0]
       model=open("model_inf.pkl","rb")
       lr_model=joblib.load(model)
       model_prediction=lr_model.predict([preds])			
       model_prediction=round(float(model_prediction),4)
       return render_template('home_temp.html',prediction=model_prediction)
-
-
+  ```
+  
+* app.route/drift
+  ```
   @app.route('/drift')
   def drift():
       return render_template('drift.html')
-
-
+  ```
+  
+* app.route/predict
+  ```
   @app.route('/predict',methods=['GET','POST'])
 
   def predict():
@@ -253,11 +313,10 @@ Follow this instructions to setup project.
       except ValueError:
         return "Please Enter valid values"
     return render_template('predict2.html',prediction=model_prediction)
-
+  ```
+  
+* __main__  
+  ```
   if __name__=='__main__':
     app.run(host='0.0.0.0', debug=False)
-
   ```
-  * Bayesian Ridge Regression Output:
-  <img src="images/model_output.png" alt="App" width="800" height="400">
-
