@@ -190,7 +190,7 @@ Follow this instructions to setup project.
 2. Install Python 3.8 or later and Libraries
 3. Run this:
    ```sh
-   *linea de comando para correr modelo*
+      flask run
    ```
 
 <!-- USAGE EXAMPLES -->
