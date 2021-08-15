@@ -64,6 +64,7 @@ For example, when we predict deflation periods, we may promote in our companies 
 * [Python](https://www.python.org)
 * [Shap](https://shap.readthedocs.io/en/latest/index.html)
 * [Bayesian Ridge Regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_bayesian_ridge.html)
+* [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 
 
 <!-- GETTING STARTED -->
@@ -128,4 +129,3 @@ Follow this instructions to setup project.
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
