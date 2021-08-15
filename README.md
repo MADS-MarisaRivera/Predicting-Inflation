@@ -201,7 +201,7 @@ Follow this instructions to setup project.
    ```
 2. Make sure to have python and prerequisite libraries installed
 3. Open in any Python IDE, file app.py if you would like to check source code
-4. Open terminal window, go to your git repo folder and run this command:
+4. Open terminal window, go to your git repo inflation_Flask folder and run this command:
    ```sh
       python app.py
    ```
