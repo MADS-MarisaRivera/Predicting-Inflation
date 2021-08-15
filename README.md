@@ -206,7 +206,7 @@ Follow this instructions to setup project.
       python app.py
    ```
 5. [PythonAnywhere Output](http://jrs.pythonanywhere.com)
-  <img src="images/model_output.png" alt="App" width="800" height="300">
+  <img src="images/model_output.png" alt="App" width="850" height="300">
 
 
 <!-- USAGE EXAMPLES -->
