@@ -125,6 +125,20 @@ For example, when we predict deflation periods, we may promote in our companies 
   ]}]}}
   ```
 * Model Input - Data Preparation Sample
+series id: key
+year: year
+period: month
+value: price index
+footnotes: attached features
+value-1: value from last month
+value-3: value from 3 months ago
+value-6: value from 6 months ago
+value-12: value from 12 months ago
+var-1: percentual delta from value and value-1
+var-3: percentual delta from value and value-3
+var-6: percentual delta from value and value-6
+var-12: percentual delta from value and value-12
+
   | series id | year | period | value | footnotes | value-1	| value-3	| value-6 | value-12 | var-1 | var-3 | var-6 | var-12 | var-1_lag | var-3_lag	| var-6_lag	| var-12_lag |
   | --- | --- | --- | --- | --- | ---	| ---	| --- | --- | --- | --- | --- | --- | --- | ---	| ---	| --- |
   | SUUR0000SA0	| 2021 | M07 | 153.424 | Initial | 152.720 | 150.221 | 147.123 | 145.747 | 0.004610 | 0.021322 | 0.042828 | 0.052673 | 0.008685 |	0.025049 | 0.042621 | 0.054354 |
