@@ -259,5 +259,5 @@ Follow this instructions to setup project.
 
   ```
   * Bayesian Ridge Regression Output:
-  <img src="images/model_output.jpg" alt="App" width="800" height="400">
+  <img src="images/model_output.png" alt="App" width="800" height="400">
 
