@@ -45,19 +45,19 @@
 
 <img src="images/inflacion.jpg" alt="App" width="800" height="400">
 
-According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays, **Guatemala is reporting a 3.82% inflation at July2021**, which is 0.94pp more than last year at July2020. At this point, it is important to enhance than inflation will always exist in our society, people has to learn to live with it. However, if we look at the definition of inflation itself:
+According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays the country is reporting a 3.82% inflation at July2021, which is 0.94pp more than last year at July2020. At this point, it is important to enhance that inflation will always exist in our society, people have to learn to live with it. However, if we look at the definition of inflation itself:
 <br/>
 "<a href="https://www.investopedia.com/terms/i/inflation.asp">Inflation</a> is the decline of purchasing power of a given currency over time. A quantitative estimate of the rate at which the decline in purchasing power occurs can be reflected in the increase of an average price level of a basket of selected goods and services in an economy over some period of time. The rise in the general level of prices, often expressed as a percentage, means that a unit of currency effectively buys less than it did in prior periods."
 <br/> 
 <br/> 
-In other words, inflation makes us feel that we can't afford as much as we could than last year, mostly, when our incomes remain static from one year to another. This is why, companies and customers, must be open-eyed when it comes to inflation, because it has a direct impact in their purchasing power.
+In other words, inflation makes us feel that we can't afford as much as we could last year, mostly, when our incomes remain static from one year to another. This is why companies and customers must be open-eyed when it comes to inflation, because it has a direct impact on their purchasing power. 
 <br/> 
 <br/> 
-Therefore, as a team of passionate members about analytics, we are seeking to predict the porcentual variance, between next month inflation value and its last years value, meaning -12 months, so that we can anticipate to increasing inflation or decreasing inflation (deflation) periods. 
-For example, when we predict deflation periods, we may promote in our companies & personal expenses, the perks of deflation, and buy more for less or, save the remaining money that we didn't spend in our regular purchases. 
+Therefore, as a team of passionate members about analytics, we are seeking to predict the porcentual variance, between next month's inflation value and its last year's value, meaning -12 months, so that we can anticipate increasing inflation or decreasing inflation (deflation) periods. 
+For example, when we predict deflation periods, we may promote in our companies & personal expenses, the perks of deflation, and buy more for less or, save the remaining money that we didn't spend in our regular purchases.
 <br/> 
 <br/> 
-*This is how, we learn to coexist with inflation behavior, in a way that we can also take the most of it when it's behavior moves on our favor.*
+*This is how we learn to coexist with inflation behavior, in a way that we can also take the most of it when it's behavior moves in our favor.*
 
 
 ### Built With
@@ -188,7 +188,7 @@ Follow this instructions to setup project.
    git clone https://github.com/MADS-MarisaRivera/Predicting-Inflation.git
    ```
 2. Install Python 3.8 or later and Libraries
-3. Run this:
+3. Run this at python console:
    ```sh
       flask run
    ```
