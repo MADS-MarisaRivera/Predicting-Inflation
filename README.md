@@ -35,7 +35,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#dev">Dev</a></li>
+    <li><a href="#usage">Usage</a></li>
   </ol>
 </details>
 
@@ -43,7 +43,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays the country is reporting a 3.82% inflation at July2021, which is 0.94pp more than last year at July2020. At this point, it is important to enhance that inflation will always exist in our society, people have to learn to live with it. However, if we look at the definition of inflation itself:
+According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays the country is reporting a 3.82% inflation at July2021, which is 0.94pp more than last year at July2020. At this point, it is important to enhance that inflation will always exist in our society, and that people have to learn to live with it. However, if we look at the definition of inflation itself:
 <br/>
 "<a href="https://www.investopedia.com/terms/i/inflation.asp">Inflation</a> is the decline of purchasing power of a given currency over time. A quantitative estimate of the rate at which the decline in purchasing power occurs can be reflected in the increase of an average price level of a basket of selected goods and services in an economy over some period of time. The rise in the general level of prices, often expressed as a percentage, means that a unit of currency effectively buys less than it did in prior periods."
 <br/> 
@@ -51,11 +51,11 @@ According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de G
 In other words, inflation makes us feel that we can't afford as much as we could last year, mostly, when our incomes remain static from one year to another. This is why companies and customers must be open-eyed when it comes to inflation, because it has a direct impact on their purchasing power. 
 <br/> 
 <br/> 
-Therefore, as a team of passionate members about analytics, we are seeking to predict the porcentual variance, between next month's inflation value and its last year's value, meaning -12 months, so that we can anticipate increasing inflation or decreasing inflation (deflation) periods. 
+Therefore, as a team of passionate members about analytics, **we are seeking to predict the percentual variance, between next month's inflation value and its last year's value, meaning 12 months earlier, so that we can anticipate increasing inflation or decreasing inflation (deflation) periods.** 
 For example, when we predict deflation periods, we may promote in our companies & personal expenses, the perks of deflation, and buy more for less or, save the remaining money that we didn't spend in our regular purchases.
 <br/> 
 <br/> 
-*This is how we learn to coexist with inflation behavior, in a way that we can also take the most of it when it's behavior moves in our favor.*
+*We believe this is how we learn to coexist with inflation behavior, in a way that we can also take the most of it when it's behavior moves in our favor.*
 
 
 ### Built With
@@ -154,7 +154,7 @@ For example, when we predict deflation periods, we may promote in our companies 
 Follow this instructions to setup project.
 
 ### Prerequisites
-* [python3.8 or later](https://www.python.org/downloads/)
+* [python3.9 or later](https://www.python.org/downloads/)
 * **shap**
   ```sh
   pip install shap
@@ -199,123 +199,36 @@ Follow this instructions to setup project.
    ```sh
    git clone https://github.com/MADS-MarisaRivera/Predicting-Inflation.git
    ```
-2. Install Python 3.8 or later and Libraries
+2. Make sure to have python and prerequisite libraries installed
 3. Open in any Python IDE, file app.py
-4. Run this command at python console:
+4. Open terminal window, go to your git repo folder and run this command:
    ```sh
       python app.py
    ```
-5. [PythonAnywhere Output](http://jrs.pythonanywhere.com)
+   <img src="images/console run.png" alt="App" width="850" height="75">
+   <img src="images/console log.png" alt="App" width="850" height="300">
+5. Go to your browser and explore home, predict & drift endpoints.
+6. You may also visit link: [PythonAnywhere Output](http://jrs.pythonanywhere.com) to see model prediction output, if you don't want to clone repo and run app with local resources.
   <img src="images/pythonanywhere_output.png" alt="App" width="850" height="300">
 
 
 <!-- USAGE EXAMPLES -->
-## Dev
-
-* app.route/
-  ```
-  @app.route('/')
-  def home():
-      headers = {'Content-type': 'application/json'}
-      data = json.dumps({"seriesid": ['SUUR0000SA0'],"startyear":"2012", "endyear":"2021"})
-      p = requests.post('https://api.bls.gov/publicAPI/v1/timeseries/data/', data=data, headers=headers)
-      json_data = json.loads(p.text)    
-
-      x = []
-
-      for series in json_data['Results']['series']:
-          seriesId = series['seriesID']
-          for item in series['data']:
-              year = item['year']
-              period = item['period']
-              value = item['value']
-              footnotes=""
-              for footnote in item['footnotes']:
-                  if footnote:
-                      footnotes = footnotes + footnote['text'] + ','
-
-
-              if 'M01' <= period <= 'M12':
-                  y = [seriesId,year,period,value,footnotes[0:-1]]
-                  x.append(y)
-
-      data_inf = pd.DataFrame(x)
-      cols=["series id","year","period","value","footnotes"]
-      data_inf.columns = cols
-      data_inf['value-1'] = data_inf['value'].shift(-1)
-      data_inf['value-3'] = data_inf['value'].shift(-3)
-      data_inf['value-6'] = data_inf['value'].shift(-6)
-      data_inf['value-12'] = data_inf['value'].shift(-12)
-      data_inf = data_inf.astype ({"series id": str,"year": int,"period":str,"value": float,"footnotes":str, "value-1": float, "value-3": float, "value-6": float, "value-12": float})
-      data_inf['var-1'] = data_inf['value']/data_inf['value-1']-1
-      data_inf['var-3'] = data_inf['value']/data_inf['value-3']-1
-      data_inf['var-6'] = data_inf['value']/data_inf['value-6']-1
-      data_inf['var-12'] = data_inf['value']/data_inf['value-12']-1
-      data_inf['var-1_lag'] = data_inf['var-1'].shift(-1)
-      data_inf['var-3_lag'] = data_inf['var-3'].shift(-1)
-      data_inf['var-6_lag'] = data_inf['var-6'].shift(-1)
-      data_inf['var-12_lag'] = data_inf['var-12'].shift(-1)
-      data_inf
-
-      X = data_inf[['var-1_lag','var-3_lag','var-6_lag','var-12_lag']][1:101]
-
-      with open(r"./model_xg.pkl", "rb") as input_file:
-          model_xg = pickle.load(input_file)
-
-      shap_plot(0,X,model_xg)
-
-
-      data_drift_report = Dashboard(tabs = [DataDriftTab])
-
-      data_drift_report.calculate(X,X, column_mapping = None)
-      data_drift_report.save("templates/drift.html")
-
-      preds = X.values.tolist()[0]
-      model=open("model_inf.pkl","rb")
-      lr_model=joblib.load(model)
-      model_prediction=lr_model.predict([preds])			
-      model_prediction=round(float(model_prediction),4)
-      return render_template('home_temp.html',prediction=model_prediction)
-  ```
-  
-* app.route/drift
-  ```
-  @app.route('/drift')
-  def drift():
-      return render_template('drift.html')
-  ```
+## Usage 
+* app.route/ & app.route/predict
+  * Go to your browser and visit respective domain and port, specified in your terminal window (For example: 192.168.5.45:5000/)
+  * Window will display prediction output: which must be interpreted in the following way: prediction output is next month's percentage delta with it's last year    reference (var-12). For example, our model is predicting that in August2021 we'll have an inflation value 5.28% higher than August2020.
+  * <br/>
+  * <img src="images/app:home output.png" alt="App" width="600" height="250">
+  * <br/>
+  * Another thing to add, is that as you may observe in shap values, we are getting the insight that our target variable is mostly influenced by the percentage variance with price index value present value and the price index value from 3 months ago.
+  * <br/> 
+  * This is the reason why we develop a simulation tool, where you can create different scenarios percentage deltas from last four months, and send it to our model as an input. 
+  * <br/>
+  * <img src="images/app:home simulation.png" alt="App" width="500" height="250">
   
 * app.route/predict
-  ```
-  @app.route('/predict',methods=['GET','POST'])
-
-  def predict():
-    if request.method =='POST':
-      print(request.form.get('var_1'))
-      print(request.form.get('var_2'))
-      print(request.form.get('var_3'))
-      print(request.form.get('var_4'))
-      try:
-        var_1=float(request.form['var_1'])
-        var_2=float(request.form['var_2'])
-        var_3=float(request.form['var_3'])
-        var_4=float(request.form['var_4'])
-        pred_args=[var_1,var_2,var_3,var_4]
-        pred_arr=np.array(pred_args)
-        preds = pred_arr
-        print(pred_arr)
-
-        model=open("model_inf.pkl","rb")
-        lr2_model=joblib.load(model)
-        model_prediction=lr2_model.predict([preds])			
-        model_prediction=round(float(model_prediction),2)
-      except ValueError:
-        return "Please Enter valid values"
-    return render_template('predict2.html',prediction=model_prediction)
-  ```
-  
-* __main__  
-  ```
-  if __name__=='__main__':
-    app.run(host='0.0.0.0', debug=False)
-  ```
+  * In /predict endpoint, you'll be able to analyze the prediction output from that scenario you just simulate.
+* app.route/drift
+  * Drift endpoint, is for the user to analyze de deviation from current values and hystoric values. For this, user must have in mind that, the more homogeneous these distributions are, the better. Which also means, more confidence in model output of predicting inflation percentage deltas from one year to another.
+  * <br/>
+  * <img src="images/app:drift output.png" alt="App" width="600" height="300">
