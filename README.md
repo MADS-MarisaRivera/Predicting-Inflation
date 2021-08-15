@@ -35,15 +35,13 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#dev">Dev</a></li>
   </ol>
 </details>
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-<img src="images/inflacion.jpg" alt="App" width="800" height="400">
 
 According to <a href="http://www.banguat.gob.gt/page/inflacion-total">Banco de Guatemala</a>, nowadays the country is reporting a 3.82% inflation at July2021, which is 0.94pp more than last year at July2020. At this point, it is important to enhance that inflation will always exist in our society, people have to learn to live with it. However, if we look at the definition of inflation itself:
 <br/>
@@ -188,13 +186,63 @@ Follow this instructions to setup project.
    git clone https://github.com/MADS-MarisaRivera/Predicting-Inflation.git
    ```
 2. Install Python 3.8 or later and Libraries
-3. Run this at python console:
+3. Open in any Python IDE, file app.py
+4. Run this command at python console:
    ```sh
       flask run
    ```
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Dev
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+* app.py functions:
+  ```
+  @app.route('/')
+  def home():
+      #test = 99
+      preds = X.values.tolist()[0]
+      model=open("model_inf.pkl","rb")
+      lr_model=joblib.load(model)
+      model_prediction=lr_model.predict([preds])			
+      model_prediction=round(float(model_prediction),4)
+      return render_template('home_temp.html',prediction=model_prediction)
+
+
+  @app.route('/drift')
+  def drift():
+      return render_template('drift.html')
+
+
+  @app.route('/predict',methods=['GET','POST'])
+
+  def predict():
+    if request.method =='POST':
+      print(request.form.get('var_1'))
+      print(request.form.get('var_2'))
+      print(request.form.get('var_3'))
+      print(request.form.get('var_4'))
+      try:
+        var_1=float(request.form['var_1'])
+        var_2=float(request.form['var_2'])
+        var_3=float(request.form['var_3'])
+        var_4=float(request.form['var_4'])
+        pred_args=[var_1,var_2,var_3,var_4]
+        pred_arr=np.array(pred_args)
+        preds = pred_arr
+        print(pred_arr)
+
+        model=open("model_inf.pkl","rb")
+        lr2_model=joblib.load(model)
+        model_prediction=lr2_model.predict([preds])			
+        model_prediction=round(float(model_prediction),2)
+      except ValueError:
+        return "Please Enter valid values"
+    return render_template('predict2.html',prediction=model_prediction)
+
+  if __name__=='__main__':
+    app.run(host='0.0.0.0', debug=False)
+
+  ```
+  * Bayesian Ridge Regression Output:
+  <img src="images/model_output.jpg" alt="App" width="800" height="400">
 
